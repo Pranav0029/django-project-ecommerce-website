@@ -1,0 +1,116 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+
+{% block title %}Reset Password | ShopEase{% endblock %}
+
+{% block body %}
+
+<style>
+    .reset-wrapper {
+        min-height: 80vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .reset-card {
+        background: linear-gradient(150deg, #0f172a, #020617);
+        border-radius: 20px;
+        padding: 40px 30px;
+        width: 400px;
+        box-shadow: 0 0 30px rgba(0,0,0,0.8);
+        color: #fff;
+    }
+
+    .reset-card h3 {
+        text-align: center;
+        margin-bottom: 25px;
+        color: #0dcaf0;
+    }
+
+    .form-label {
+        color: #9ca3af;
+    }
+
+    .form-control {
+        background: #111;
+        border: 1px solid #444;
+        color: #fff;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    .form-control:focus {
+        background: #111;
+        color: #fff;
+        border-color: #0dcaf0;
+        box-shadow: none;
+    }
+
+    .btn-update {
+        background: linear-gradient(120deg, #0dcaf0, #06b6d4);
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        color: #000;
+    }
+
+    .alert {
+        border-radius: 12px;
+        font-size: 14px;
+    }
+</style>
+
+<div class="reset-wrapper">
+    <div class="reset-card">
+
+        <h3>Reset Password</h3>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert
+                    {% if message.tags == 'error' %}
+                        alert-danger
+                    {% else %}
+                        alert-success
+                    {% endif %}
+                    text-center">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Old Password</label>
+                <input type="password" name="old_password"
+                       class="form-control"
+                       placeholder="Enter old password" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">New Password</label>
+                <input type="password" name="new_password"
+                       class="form-control"
+                       placeholder="Enter new password" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Confirm New Password</label>
+                <input type="password" name="confirm_password"
+                       class="form-control"
+                       placeholder="Confirm new password" required>
+            </div>
+
+            <button type="submit" class="btn btn-update w-100 py-2">
+                <i class="bi bi-shield-lock-fill me-1"></i> Update Password
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

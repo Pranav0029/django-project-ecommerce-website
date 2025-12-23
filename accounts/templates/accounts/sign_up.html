@@ -1,0 +1,154 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+
+{% block title %}Create Account | ShopEase{% endblock %}
+
+{% block body %}
+
+<style>
+    .signup-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .main-container {
+        width: 900px;
+        max-width: 95%;
+        background: rgba(0,0,0,0.85);
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+        from {opacity: 0; transform: translateY(40px);}
+        to {opacity: 1; transform: translateY(0);}
+    }
+
+    .signup-left {
+        width: 50%;
+        padding: 40px;
+        color: #fff;
+    }
+
+    .signup-right {
+        width: 50%;
+        background: linear-gradient(135deg, #141e30, #243b55);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        padding: 30px;
+    }
+
+    .form-control {
+        background: #111;
+        border: 1px solid #444;
+        color: #fff;
+    }
+
+    .form-control:focus {
+        background: #111;
+        color: #fff;
+        border-color: #0d6efd;
+        box-shadow: none;
+    }
+
+    .form-control::placeholder {
+        color: #888;
+    }
+
+    .btn-success {
+        border-radius: 25px;
+        font-weight: 600;
+    }
+
+    @media (max-width: 768px) {
+        .main-container {
+            flex-direction: column;
+        }
+        .signup-left,
+        .signup-right {
+            width: 100%;
+        }
+    }
+</style>
+
+<div class="signup-wrapper">
+
+    <div class="main-container">
+
+        <!-- LEFT : SIGN UP FORM -->
+        <div class="signup-left">
+            <p class="mb-1 text-secondary">SHOP EASE</p>
+            <h3 class="mb-2">Create Account ✨</h3>
+            <p class="text-secondary mb-4">Join and start shopping</p>
+
+            <!-- DJANGO MESSAGES -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" novalidate>
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="full_name"
+                           class="form-control form-control-lg"
+                           placeholder="Enter your full name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email"
+                           class="form-control form-control-lg"
+                           placeholder="Enter your email" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="text" name="phone"
+                           class="form-control form-control-lg"
+                           placeholder="Enter your mobile number" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password"
+                           class="form-control form-control-lg"
+                           placeholder="Create password" required>
+                </div>
+
+                <button type="submit" class="btn btn-success w-100 btn-lg mt-3">
+                    Create Account
+                </button>
+
+                <p class="text-center mt-4 text-secondary">
+                    Already have an account?
+                    <a href="{% url 'sign_in' %}" class="text-info text-decoration-none">
+                        Sign In
+                    </a>
+                </p>
+            </form>
+        </div>
+
+        <!-- RIGHT : INFO SECTION -->
+        <div class="signup-right">
+            <h2>Shop Smart 🛒</h2>
+            <p>Fast • Secure • Modern Shopping Experience</p>
+            <div style="font-size:32px;">🛍️ 💳 🚚 ⭐</div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

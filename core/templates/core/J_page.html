@@ -1,0 +1,166 @@
+{% extends "core/base.html" %}
+{% block title %}High Jewellery | Limited Edition{% endblock %}
+{% load static %}
+
+{% block body %}
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+
+<style>
+/* ===== ULTRA-LUXURY REFINED THEME ===== */
+:root {
+    --gold-gradient: linear-gradient(135deg, #c5a059 0%, #f1e4c1 50%, #b8860b 100%);
+    --soft-cream: #f9f8f6;
+    --deep-black: #1a1a1a;
+}
+
+body {
+    background-color: #ffffff;
+    color: var(--deep-black);
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0.5px;
+}
+
+.luxury-heading {
+    font-family: 'Playfair Display', serif;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 400;
+}
+
+.serif-italic {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+}
+
+.jewel-hero {
+    height: 600px;
+    background: linear-gradient(to right, rgba(0,0,0,0.4), transparent),
+                url('https://images.unsplash.com/photo-1584302179602-e4c3d3fd629d?q=80&w=2070&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    border-radius: 0;
+    position: relative;
+}
+
+.hero-text-box { padding-left: 8%; color: white; }
+
+.jewel-card {
+    border: none;
+    background: #fff;
+    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+}
+
+.jewel-card:hover { transform: translateY(-10px); }
+
+.img-wrapper {
+    background-color: var(--soft-cream);
+    padding: 20px;
+    overflow: hidden;
+    position: relative;
+}
+
+.jewel-img {
+    height: 320px;
+    width: 100%;
+    object-fit: contain;
+    transition: transform 1.2s ease;
+}
+
+.jewel-card:hover .jewel-img { transform: scale(1.1); }
+
+.price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #8a6d3b;
+    font-weight: 700;
+}
+
+.btn-buy {
+    background: var(--deep-black);
+    color: white;
+    border: none;
+    border-radius: 0;
+    padding: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    transition: 0.4s;
+    width: 100%;
+}
+
+.btn-buy:hover { background: #c5a059; color: white; }
+
+.btn-wishlist {
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    color: #888;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    padding: 10px;
+}
+</style>
+
+<section class="jewel-hero mb-5">
+    <div class="hero-text-box">
+        <h6 class="text-uppercase mb-3" style="letter-spacing: 5px;">New Collection 2024</h6>
+        <h1 class="display-2 luxury-heading">Timeless<br><span class="serif-italic text-warning">Elegance</span></h1>
+        <p class="lead mb-4" style="max-width: 450px; font-weight: 300;">Handcrafted masterpieces using only the purest 24K gold.</p>
+        <a href="#collection" class="btn btn-outline-light px-5 py-3 rounded-0">EXPLORE PIECES</a>
+    </div>
+</section>
+
+<div class="container mb-5" id="collection">
+    <div class="text-center mb-5">
+        <h2 class="luxury-heading">Exquisite Pieces</h2>
+        <div style="width: 50px; height: 2px; background: #c5a059; margin: 20px auto;"></div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-5">
+        {% for product in products %}
+        <div class="col">
+            <div class="card jewel-card h-100">
+                <div class="img-wrapper">
+                    <a href="{% url 'S_page' product.pk %}">
+                        {% if product.image %}
+                            <img src="{{ product.image_url }}" class="jewel-img">
+                        {% else %}
+                            <img src="{{ product.image_url }}" class="jewel-img">
+                        {% endif %}
+                    </a>
+                </div>
+
+                <div class="card-body px-0 pt-4 text-center">
+                    <h5 class="luxury-heading" style="font-size: 1.1rem;">{{ product.name }}</h5>
+                    <p class="price my-2">₹{{ product.price|floatformat:0 }}</p>
+
+                    <div class="mt-3 px-2">
+                        {% if product.quantity > 0 %}
+                            <div class="d-grid gap-2">
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="product_id" value="{{ product.id }}">
+                                    <button type="submit" class="btn btn-buy">Add to Bag</button>
+                                </form>
+                                <a href="{% url 'order' product.id %}"
+                                   class="btn btn-outline-dark btn-sm"
+                                   style="flex:1; margin-left:5px;">
+                                    Buy Now
+                                </a>
+                            </div>
+                        {% else %}
+                            <span class="badge bg-light text-dark border w-100 py-2 rounded-0">Sold Out</span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

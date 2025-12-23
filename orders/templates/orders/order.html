@@ -1,0 +1,163 @@
+{% extends "orders/base.html" %}
+{% block title %}Place Order{% endblock %}
+
+{% block body %}
+<style>
+    :root {
+        --dark-text: #1a1d20;
+        --muted-text: #495057;
+        --border-color: #adb5bd; /* Darker borders */
+    }
+    body {
+        background-color: #f0f2f5;
+        color: var(--dark-text);
+    }
+    /* Card Styling */
+    .order-card {
+        border: 2px solid #dee2e6;
+        border-radius: 12px;
+        background: #ffffff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    /* Form Label Styling - Much Darker */
+    .form-label {
+        font-weight: 700 !important;
+        color: var(--dark-text) !important;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+    /* Input Styling - High Visibility */
+    .form-control, .form-select {
+        border: 2px solid var(--border-color);
+        border-radius: 8px;
+        padding: 12px;
+        color: #000;
+        font-weight: 500;
+        background-color: #fdfdfd;
+    }
+    .form-control:focus {
+        border-color: #000;
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.1);
+        background-color: #fff;
+    }
+    /* Read-only inputs (Product/Price) */
+    .form-control[readonly] {
+        background-color: #e9ecef;
+        border-color: #ced4da;
+        color: #212529;
+        font-weight: 700;
+    }
+    .section-header {
+        border-left: 5px solid #000;
+        padding-left: 15px;
+        margin-bottom: 25px;
+        color: #000;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    .sticky-summary {
+        position: sticky;
+        top: 20px;
+    }
+    .total-row {
+        background: #212529;
+        color: #fff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container py-5">
+    <div class="row g-4">
+        <div class="col-lg-7">
+            <div class="card order-card p-4 p-md-5">
+                <h2 class="fw-black mb-5 text-dark">Confirm Your Purchase</h2>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <h5 class="section-header">1. Customer Information</h5>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Full Name</label>
+                            <input type="text" class="form-control" value="{{ customer.full_name }}">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-control" value="{{ customer.email }}">
+                        </div>
+                        <div class="col-12 mb-4">
+                            <label class="form-label">Phone Number</label>
+                            <input type="text" class="form-control" value="{{ customer.phone }}">
+                        </div>
+                    </div>
+
+                    <h5 class="section-header">2. Delivery Details</h5>
+                    <div class="mb-3">
+                        <label class="form-label">Complete Shipping Address</label>
+                        <textarea name="address" class="form-control" rows="3" placeholder="House No, Building, Street, Area..." required></textarea>
+                    </div>
+                    <div class="row mb-4">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pincode</label>
+                            <input type="text" name="pincode" class="form-control" placeholder="e.g. 400001" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Payment Method</label>
+                            <select name="payment_method" class="form-select" required>
+                                <option value="COD">Cash on Delivery</option>
+                                <option value="UPI">UPI Payment</option>
+                                <option value="CARD">Debit/Credit Card</option>
+                                <option value="NET">Net Banking</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-dark btn-lg w-100 py-3 fw-bold shadow">
+                        PLACE ORDER NOW
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="sticky-summary">
+                <div class="card order-card p-4">
+                    <h5 class="section-header">Order Summary</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label">Selected Product</label>
+                        <input type="text" class="form-control" value="{{ product.name }}" readonly>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <label class="form-label">Unit Price</label>
+                            <input type="text" class="form-control" value="₹{{ product.price }}" readonly>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Quantity</label>
+                            <input type="number" name="quantity" value="1" min="1" class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="total-row d-flex justify-content-between align-items-center">
+                        <span class="h5 mb-0 fw-bold">Grand Total:</span>
+                        <span class="h4 mb-0 fw-bold">₹{{ product.price }}</span>
+                    </div>
+
+                    <p class="text-center text-muted mt-3 small">
+                        <i class="bi bi-lock-fill"></i> SSL Secure Checkout
+                    </p>
+                </div>
+
+                <div class="alert alert-warning mt-3 border-dark">
+                    <strong>Note:</strong> Please verify your phone number. Our agent will call to confirm this order.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

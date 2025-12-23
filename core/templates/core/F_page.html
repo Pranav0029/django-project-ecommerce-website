@@ -1,0 +1,265 @@
+{% extends "core/base.html" %}
+{% block title %}Aura Fine Jewellery | Timeless Elegance{% endblock %}
+{% load static %}
+
+{% block body %}
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;1,400&family=Montserrat:wght@200;400;600&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --champagne: #f9f7f2;
+        --gold-text: #b8860b;
+        --dark-stone: #2c2c2c;
+    }
+
+    body {
+        background-color: #fff;
+        color: var(--dark-stone);
+        font-family: 'Montserrat', sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
+
+    .serif { font-family: 'Cormorant Garamond', serif; }
+
+    /* ===== HERO SECTION ===== */
+    .hero-wrap {
+        position: relative;
+        height: 70vh;
+        min-height: 500px;
+        background: var(--champagne);
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+
+    .hero-image-bg {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 60%;
+        height: 100%;
+        background: url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?q=80&w=2070&auto=format&fit=crop') center/cover;
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+
+    /* ===== PRODUCT CARD ===== */
+    .jewel-card {
+        border: none;
+        background: transparent;
+        transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    }
+
+    .img-container {
+        position: relative;
+        background: var(--champagne);
+        overflow: hidden;
+        aspect-ratio: 1/1.2;
+        border-radius: 4px;
+    }
+
+    .product-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.8s ease;
+    }
+
+    .jewel-card:hover .product-img {
+        transform: scale(1.08);
+    }
+
+    /* ===== PRODUCT NAME ===== */
+    .card-body h5 {
+        color: #000;
+        font-weight: 700;
+        font-size: 1rem;
+        letter-spacing: 1px;
+        text-transform: capitalize;
+    }
+
+    /* ===== PRICING ===== */
+    .mrp-strike {
+        text-decoration: line-through;
+        color: #999;
+        font-size: 0.85rem;
+        margin-right: 10px;
+    }
+
+    .price-tag {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.4rem;
+        font-weight: 500;
+        color: var(--gold-text);
+    }
+
+    .badge-luxury {
+        background: var(--gold-text);
+        font-weight: 400;
+        letter-spacing: 1px;
+        border-radius: 0;
+        padding: 4px 10px;
+    }
+
+    /* ===== PERMANENT BUTTONS ===== */
+    .card-body .btn {
+        padding: 8px 0;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+        border-radius: 2px;
+        transition: 0.3s ease;
+    }
+
+    .card-body .btn-dark {
+        background-color: var(--dark-stone);
+        color: #fff;
+        border: none;
+    }
+
+    .card-body .btn-outline-dark {
+        background-color: transparent;
+        border: 1px solid var(--dark-stone);
+        color: var(--dark-stone);
+    }
+
+    .card-body .btn:hover {
+        transform: scale(1.05);
+    }
+
+    /* ===== SECTION TITLES ===== */
+    .section-divider {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        margin: 4rem 0;
+    }
+    .section-divider::before, .section-divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid #eee;
+    }
+    .section-divider span {
+        padding: 0 20px;
+        font-size: 1.5rem;
+        letter-spacing: 5px;
+        text-transform: uppercase;
+    }
+
+    /* ===== FEATURES ===== */
+    .feature-text {
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+
+</style>
+
+<!-- ===== HERO SECTION ===== -->
+<section class="hero-wrap mb-5">
+    <div class="container" style="z-index: 2;">
+        <div class="col-lg-5">
+            <h6 class="text-uppercase mb-3" style="letter-spacing: 4px;">Handcrafted in Milan</h6>
+            <h1 class="display-3 serif mb-4">Timeless Beauty <br><em>Redefined</em></h1>
+            <p class="text-muted mb-4">Discover our new collection of ethically sourced diamonds and 18k solid gold pieces designed for the modern woman.</p>
+            <a href="{% url 'J_page' %}" class="btn btn-dark rounded-0 px-5 py-3 text-uppercase small" style="letter-spacing: 2px;">Explore Collection</a>
+        </div>
+    </div>
+    <div class="hero-image-bg d-none d-lg-block"></div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<div class="container mb-5 py-4 border-bottom border-top">
+    <div class="row text-center g-4">
+        <div class="col-md-4 feature-text">✨ BIS Hallmarked Gold</div>
+        <div class="col-md-4 feature-text">🚚 Insured Global Shipping</div>
+        <div class="col-md-4 feature-text">💎 IGI Certified Diamonds</div>
+    </div>
+</div>
+
+<!-- ===== THE VAULT / PRODUCT CARDS ===== -->
+<main class="container mb-5" id="shop">
+    <div class="section-divider">
+        <span class="serif">The Vault</span>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-5">
+        {% for product in products %}
+        <div class="col">
+            <div class="card jewel-card h-100">
+                <div class="img-container">
+                    <a href="{% url 'S_page' product.pk %}">
+                        {% if product.image and product.image.url %}
+                            <img src="{{ product.image.url }}" class="product-img" alt="{{ product.name }}">
+                        {% elif product.image_url %}
+                            <img src="{{ product.image_url }}" class="product-img" alt="{{ product.name }}">
+                        {% else %}
+                            <img src="{% static 'app1/images/default-product.jpg' %}" class="product-img" alt="Default Product">
+                        {% endif %}
+                    </a>
+                </div>
+
+                <div class="card-body px-0 pt-4">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5>{{ product.name|title }}</h5>
+                        {% if product.offer_amount > 0 %}
+                            <span class="badge badge-luxury">OFFER</span>
+                        {% endif %}
+                    </div>
+
+                    <p class="text-muted small mb-3 serif" style="font-size: 0.95rem;">
+                        {{ product.description|truncatechars:50 }}
+                    </p>
+
+                    <div class="d-flex align-items-baseline mb-3">
+                        <span class="mrp-strike">₹{{ product.fake_mrp }}</span>
+                        <span class="price-tag">₹{{ product.price }}</span>
+                    </div>
+
+                    {% if product.quantity <= 0 %}
+                        <p class="text-danger small mt-2 text-uppercase fw-bold" style="font-size: 0.7rem;">Currently Unavailable</p>
+                    {% endif %}
+
+                    <!-- ===== PERMANENT BUTTONS ===== -->
+                    {% if product.quantity > 0 %}
+                    <form method="POST" class="d-flex justify-content-around mt-2">
+                        {% csrf_token %}
+                        <input type="hidden" name="product_id" value="{{ product.id }}">
+
+                        <button type="submit"
+                                class="btn btn-dark btn-sm"
+                                style="flex:1; margin-right:5px;">
+                            Add to Cart
+                        </button>
+
+                        <a href="{% url 'order' product.id %}"
+                           class="btn btn-outline-dark btn-sm"
+                           style="flex:1; margin-left:5px;">
+                            Buy Now
+                        </a>
+                    </form>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <h3 class="serif italic">The collection is currently being curated.</h3>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+
+<!-- ===== OUR CRAFT SECTION ===== -->
+<section class="container-fluid py-5 mt-5" style="background-color: var(--champagne);">
+    <div class="container text-center py-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-7">
+                <h2 class="serif italic mb-4">Our Craft</h2>
+                <p class="lead serif mb-4">Every piece in our collection is meticulously handcrafted by master artisans with over 30 years of experience, ensuring your jewellery lasts for generations.</p>
+                <a href="#" class="text-dark text-decoration-none border-bottom border-dark pb-1 small text-uppercase">Learn About Our Process</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

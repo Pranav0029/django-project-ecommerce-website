@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AURA | The Future of Style</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Syncopate:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --neon-pink: #ff007f;
+            --neon-blue: #00f2ff;
+            --dark-bg: #0a0a0a;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Moving Mesh Background Glows */
+        .bg-glow {
+            position: fixed;
+            width: 40vw;
+            height: 40vw;
+            background: radial-gradient(circle, rgba(255, 0, 127, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+            animation: move 20s infinite alternate;
+        }
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(50%, 50%); }
+        }
+
+        /* --- Navbar --- */
+        .navbar {
+            backdrop-filter: blur(20px);
+            background: rgba(0,0,0,0.7);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+        }
+
+        /* --- Hero Section --- */
+        .hero-section {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,1) 100%),
+                        url('https://images.unsplash.com/photo-1550745673-12009849929d?auto=format&fit=crop&q=80&w=2070') center/cover;
+            background-attachment: fixed;
+        }
+
+        .hero-title {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(3.5rem, 10vw, 8rem);
+            line-height: 0.8;
+            letter-spacing: -5px;
+            background: linear-gradient(to bottom, #fff 40%, #444 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .floating-badge {
+            background: var(--neon-pink);
+            padding: 5px 15px;
+            font-weight: 900;
+            font-size: 0.7rem;
+            border-radius: 50px;
+            box-shadow: 0 0 20px var(--neon-pink);
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        /* --- Glass Cards --- */
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: 30px;
+            padding: 40px;
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--neon-pink);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+        }
+
+        /* --- Buttons --- */
+        .btn-aurora {
+            background: #fff;
+            color: #000;
+            padding: 20px 50px;
+            font-weight: 900;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 100px;
+            position: relative;
+            transition: 0.3s;
+            overflow: hidden;
+        }
+
+        .btn-aurora:hover {
+            letter-spacing: 3px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.4);
+            transform: scale(1.05);
+        }
+
+        /* --- Product Grid --- */
+        .product-img-wrapper {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            aspect-ratio: 4/5;
+        }
+
+        .product-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .product-img-wrapper:hover .product-img {
+            transform: scale(1.15);
+        }
+
+        .price-tag {
+            font-family: 'Syncopate', sans-serif;
+            color: var(--neon-blue);
+        }
+
+        /* --- Trust Bar --- */
+        .trust-bar {
+            padding: 80px 0;
+            background: #000;
+            border-top: 1px solid #222;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            display: block;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow"></div>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand fw-black text-white" href="#" style="font-weight:900; font-size: 1.5rem;">AURA<span style="color:var(--neon-pink)">.</span></a>
+            <div class="d-none d-lg-flex gap-5">
+                <a href="{% url 'F_page' %}" class="nav-link text-white-50">Shop</a>
+                <a href="{% url 'J_page' %}" class="nav-link text-white-50">Manifesto</a>
+                <a href="#" class="nav-link text-white-50">Archive</a>
+            </div>
+            <a href="{% url 'sign_up' %}" class="btn btn-outline-light rounded-pill px-4 btn-sm">Join Club</a>
+        </div>
+    </nav>
+
+    <section class="hero-section">
+        <div class="container text-center">
+            <span class="floating-badge">FALL / WINTER 2025</span>
+            <h1 class="hero-title">Pranav<br>ECOM_WEB</h1>
+            <p class="mt-4 text-white-50 mx-auto" style="max-width: 500px; font-size: 1.1rem;">
+                Experience the next evolution of streetwear. Crafted in darkness, designed for the light.
+            </p>
+            <div class="mt-5">
+                <br><br>
+                <button class="btn btn-aurora me-3"><a class="btn btn-aurora me-3" href="{% url 'F_page' %}" >Explore Drop</a> </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-7">
+                    <div class="product-img-wrapper glass-panel p-0">
+                        <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&q=80&w=1000" class="product-img" alt="Fashion">
+                        <div class="position-absolute bottom-0 start-0 p-5">
+                            <h2 class="display-4 fw-black">THE NEON <br> PUFFER</h2>
+                            <p class="price-tag">$450.00</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5">
+                    <div class="glass-panel h-100 d-flex flex-column justify-content-center">
+                        <h6 class="text-neon-pink" style="color:var(--neon-pink)">LIMITED EDITION</h6>
+                        <h2 class="mb-4">CARBON FIBER ACCESSORIES</h2>
+                        <p class="text-white-50 mb-5">Indestructible materials meet high-fashion aesthetics. Available for 48 hours only.</p>
+                        <ul class="list-unstyled mb-5">
+                            <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> Hand-stitched in Italy</li>
+                            <li class="mb-3"><i class="fa-solid fa-check text-success me-2"></i> RFID Protection</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i> Lifetime Warranty</li>
+                        </ul>
+                        <button class="btn btn-outline-light rounded-0 py-3">View Collection</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="trust-bar">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-3">
+                    <span class="stat-number">50K+</span>
+                    <small class="text-white-50">GLOBAL CLIENTS</small>
+                </div>
+                <div class="col-md-3">
+                    <span class="stat-number">24H</span>
+                    <small class="text-white-50">FAST SHIPPING</small>
+                </div>
+                <div class="col-md-3">
+                    <span class="stat-number">100%</span>
+                    <small class="text-white-50">VEGAN LEATHER</small>
+                </div>
+                <div class="col-md-3">
+                    <span class="stat-number">4.9/5</span>
+                    <small class="text-white-50">USER RATING</small>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="py-5">
+        <div class="container text-center">
+            <div class="glass-panel py-5">
+                <h3 class="fw-black mb-4">STAY IN THE LIGHT</h3>
+                <div class="input-group mx-auto" style="max-width: 400px;">
+                    <input type="text" class="form-control bg-transparent border-secondary text-white p-3" placeholder="email@address.com">
+                    <button class="btn btn-light px-4">JOIN</button>
+                </div>
+                <div class="mt-5 d-flex justify-content-center gap-4">
+                    <a href="#" class="text-white-50"><i class="fa-brands fa-instagram fs-3"></i></a>
+                    <a href="#" class="text-white-50"><i class="fa-brands fa-discord fs-3"></i></a>
+                    <a href="#" class="text-white-50"><i class="fa-brands fa-x-twitter fs-3"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

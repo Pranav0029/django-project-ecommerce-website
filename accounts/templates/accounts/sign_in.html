@@ -1,0 +1,72 @@
+{% extends "accounts/base.html" %}
+{% load static %}
+
+{% block title %}Login | ShopEase{% endblock %}
+
+{% block body %}
+
+<style>
+    .login-wrapper {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .login-card {
+        width: 400px;
+        background: rgba(0, 0, 0, 0.85);
+        border-radius: 16px;
+        padding: 30px;
+        color: #fff;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.6);
+    }
+
+    .login-card .form-control {
+        background: #111;
+        border: 1px solid #444;
+        color: #fff;
+    }
+
+    .login-card .form-control:focus {
+        background: #111;
+        color: #fff;
+        border-color: #0d6efd;
+        box-shadow: none;
+    }
+</style>
+
+<div class="login-wrapper">
+    <div class="login-card">
+
+        <h3 class="text-center mb-4">LOGIN ACCOUNT</h3>
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div class="mb-3">
+                <label class="form-label">Full Name</label>
+                <input type="text" name="full_name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" required>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 py-2">
+                Login
+            </button>
+
+            <p class="text-center mt-4 text-secondary">
+                Create new Account!
+                <a href="{% url 'sign_up' %}" class="text-info text-decoration-none">
+                    Sign Up
+                </a>
+            </p>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
