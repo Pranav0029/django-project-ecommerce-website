@@ -84,7 +84,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'ecom_db',         # database name from before
         'USER': 'root',       # username from before
-        'PASSWORD': '050110',  # password from before
+        'PASSWORD': '----',  # password from before
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -136,5 +136,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'bdada3038@gmail.com'
-EMAIL_HOST_PASSWORD ='dujrfzrurupcofsb'
+EMAIL_HOST_USER = 'your_gmail'
+EMAIL_HOST_PASSWORD ='----'
